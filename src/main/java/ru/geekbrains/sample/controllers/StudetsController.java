@@ -12,7 +12,7 @@ import ru.geekbrains.sample.repository.StudentsRepository;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class StudetsController {
     private final StudentsRepository studentsRepository;
 
     @GetMapping("/")
