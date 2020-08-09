@@ -1,46 +1,43 @@
 package ru.geekbrains.sample.dao;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import ru.geekbrains.sample.persistence.entity.Student;
+import ru.geekbrains.sample.persistence.entity.Tutor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class StudentRepository {
-
+public class TutorRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Student> findAllStudents() {
+    public List<Tutor> findAllTutors() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Student> query = builder.createQuery(Student.class);
-        Root<Student> root = query.from(Student.class);
-        query.select(root).where(builder.and(builder.equal(root.get("graduated"), false)));
+        CriteriaQuery<Tutor> query = builder.createQuery(Tutor.class);
+        Root<Tutor> root = query.from(Tutor.class);
+        query.select(root);
         return entityManager.createQuery(query).getResultList();
     }
 
-    public Student findById(UUID uuid) {
+    public Tutor findById(UUID uuid) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Student> query = builder.createQuery(Student.class);
-        Root<Student> root = query.from(Student.class);
+        CriteriaQuery<Tutor> query = builder.createQuery(Tutor.class);
+        Root<Tutor> root = query.from(Tutor.class);
         query.select(root).where(builder.and(builder.equal(root.get("uuid"), uuid)));
         return entityManager.createQuery(query).getSingleResult();
     }
 
-    @Transactional
-    public void addStudent(Student student) {
-        if (student != null) {
-            entityManager.persist(student);
+    public void addTutor(Tutor tutor) {
+        if (tutor != null) {
+            entityManager.getTransaction().begin();
+            entityManager.persist(tutor);
+            entityManager.getTransaction().commit();
+            entityManager.close();
         }
     }
-
 }

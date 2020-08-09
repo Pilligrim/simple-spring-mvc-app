@@ -1,7 +1,9 @@
 package ru.geekbrains.sample.persistence.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.List;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student extends AbstractEntity {
 
     private String name;
